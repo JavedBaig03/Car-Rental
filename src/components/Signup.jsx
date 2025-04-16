@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import "./Signup.css";
 
 const Signup = ({ onClose, onLoginClick }) => {
+  const [fullName, setFullName] = useState(""); 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem("user", JSON.stringify({ email, password }));
+    localStorage.setItem("user", JSON.stringify({ fullName, email, password }));
     alert("Signup successful!");
+    setFullName("");
     setEmail("");
     setPassword("");
   };
@@ -22,6 +24,17 @@ const Signup = ({ onClose, onLoginClick }) => {
         </div>
         <form className="signup-form" onSubmit={handleSubmit}>
           <div className="form-group">
+            <label className="form-label">Full Name</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Full Name"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
             <label className="form-label">Email</label>
             <input
               type="email"
@@ -33,7 +46,7 @@ const Signup = ({ onClose, onLoginClick }) => {
             />
           </div>
           <div className="form-group">
-            <label className="form-label">Password</label>
+            <label className="form-label">Set Password</label>
             <input
               type="password"
               className="form-control"
@@ -43,10 +56,7 @@ const Signup = ({ onClose, onLoginClick }) => {
               required
             />
           </div>
-          <div className="remember-me">
-            <input type="checkbox" id="remember" />
-            <label htmlFor="remember">Remember me</label>
-          </div>
+
           <button type="submit" className="signup-button">SIGNUP</button>
           <div className="signup-footer">
             <a href="#" className="forgot-password">Forgot Password?</a>
