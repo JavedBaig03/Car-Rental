@@ -7,6 +7,7 @@ import Testimonials from "./components/Testimonials";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import './App.css';
+import SearchBar from "./components/SearchBar";
 
 const App = () => {
   useEffect(() => {
@@ -28,6 +29,7 @@ const App = () => {
   return (
     <div className="app">
       <Header />
+      <SearchBar />
       <Hero />
       <main>
         <Services />

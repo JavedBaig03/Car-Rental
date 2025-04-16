@@ -1,7 +1,7 @@
 import React from "react";
 import "./Login.css";
 
-const Login = ({ onClose }) => {
+const Login = ({ onClose, onSignupClick }) => {
   return (
     <div className="login-overlay">
       <div className="login-modal">
@@ -27,7 +27,15 @@ const Login = ({ onClose }) => {
           </form>
           <div className="login-footer">
             <a href="#" className="forgot-password">Forgot Password?</a>
-            <p className="signup-link">Don't have an account? <a href="#">Sign Up</a></p>
+            <p className="signup-link">
+              Don’t have an account?{" "}
+              <span
+                onClick={onSignupClick}
+                style={{ color: "#0056d2", cursor: "pointer", fontWeight: "bold" }}
+              >
+                Sign Up
+              </span>
+            </p>
           </div>
         </div>
       </div>
