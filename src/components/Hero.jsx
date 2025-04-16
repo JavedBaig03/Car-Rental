@@ -8,7 +8,7 @@ const Hero = () => {
 
   return (
     <section className="hero" id="hero">
-      <div className="hero-content">
+
         <h2 className="hero-title">Premium Car Rental Experience</h2>
         <p className="hero-subtitle">Discover our exclusive selection of luxury, sports, and electric vehicles for an unforgettable journey</p>
         <div className="hero-buttons">
@@ -19,7 +19,7 @@ const Hero = () => {
             Our Services
           </button>
         </div>
-      </div>
+
 
       <div className="hero-scroll-indicator" onClick={scrollToServices}>
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
