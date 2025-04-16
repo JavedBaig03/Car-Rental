@@ -59,7 +59,7 @@ const Signup = ({ onClose, onLoginClick }) => {
 
           <button type="submit" className="signup-button">SIGNUP</button>
           <div className="signup-footer">
-            <a href="#" className="forgot-password">Forgot Password?</a>
+
             <p className="signup-link">
               Already have an account?{" "}
               <span
