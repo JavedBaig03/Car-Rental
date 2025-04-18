@@ -1,12 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./CarDetailModal.css";
 
-const CarDetailModal = ({ car, onClose }) => {
+const CarDetailModal = ({ car, onClose, tripData }) => {
+  const [selectedPlan, setSelectedPlan] = useState("hourly");
+  const navigate = useNavigate();
+
   if (!car) return null;
+
+  const price = selectedPlan === "hourly" ? car.hourlyRate : car.dailyRate;
+
+  const handlePickUp = () => {
+    if (
+      !tripData?.pickupLocation ||
+      !tripData?.pickupDate ||
+      !tripData?.pickupTime ||
+      !tripData?.duration
+    ) {
+      alert("⚠️ Please fill all the trip details in the search bar before proceeding to payment.");
+      return;
+    }
+
+    navigate("/payment", {
+      state: {
+        car,
+        selectedPlan,
+        price,
+        tripDetails: tripData,
+      },
+    });
+  };
 
   return (
     <div className="car-modal-overlay">
       <div className="car-modal-horizontal">
+
         {/* Left Section: Image */}
         <div className="left-section">
           <img className="modal-car-image" src={car.image} alt={car.name} />
@@ -40,8 +68,18 @@ const CarDetailModal = ({ car, onClose }) => {
           <div className="plan">
             <p className="label">Plan</p>
             <div className="plan-options">
-              <button className="active">Hourly Rent<br /><span>{car.hourlyRate}</span></button>
-              <button disabled>Daily Rent<br /><span>{car.dailyRate}</span></button>
+              <button
+                className={selectedPlan === "hourly" ? "active" : ""}
+                onClick={() => setSelectedPlan("hourly")}
+              >
+                Hourly Rent<br /><span>{car.hourlyRate}</span>
+              </button>
+              <button
+                className={selectedPlan === "daily" ? "active" : ""}
+                onClick={() => setSelectedPlan("daily")}
+              >
+                Daily Rent<br /><span>{car.dailyRate}</span>
+              </button>
             </div>
           </div>
 
@@ -51,8 +89,8 @@ const CarDetailModal = ({ car, onClose }) => {
           </div>
 
           <div className="modal-footer">
-            <h3 className="price">{car.hourlyRate} <span>/ hour</span></h3>
-            <button className="pickup-btn">Pick Up</button>
+            <h3 className="price">{price} <span>/ {selectedPlan}</span></h3>
+            <button className="pickup-btn" onClick={handlePickUp}>Pick Up</button>
           </div>
         </div>
       </div>

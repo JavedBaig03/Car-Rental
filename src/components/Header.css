@@ -172,3 +172,15 @@
     width: 200px;
   }
 } 
+.logout-toast {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background: #4BB543;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+}

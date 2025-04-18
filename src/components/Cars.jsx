@@ -2,7 +2,8 @@ import React, { useRef, useState } from "react";
 import "./Cars.css";
 import CarDetailModal from "./CarDetailModal";
 
-const Cars = () => {
+const Cars = ({ searchData }) => {
+  
   const [selectedCar, setSelectedCar] = useState(null);
 
   
@@ -448,11 +449,16 @@ const Cars = () => {
       {renderCarSection("Sports Cars", sportsCars, "sports")}
       {renderCarSection("Electric Cars", electricCars, "electric")}
       {renderCarSection("Sedans", sedanCars, "sedan")}
-      <button className="show-all-btn">View All Cars</button>
+      
 
       {selectedCar && (
-        <CarDetailModal car={selectedCar} onClose={() => setSelectedCar(null)} />
-      )}
+  <CarDetailModal
+    car={selectedCar}
+    onClose={() => setSelectedCar(null)}
+    tripData={searchData} // ✅ this passes the pickup details
+  />
+)}
+
     </section>
   );
 };

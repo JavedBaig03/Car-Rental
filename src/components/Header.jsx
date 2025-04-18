@@ -8,16 +8,22 @@ const Header = () => {
   const [showSignup, setShowSignup] = useState(false); 
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [logoutMessage, setLogoutMessage] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setLogoutMessage(true);
+    setTimeout(() => setLogoutMessage(false), 3000);
+  };
 
   return (
     <>
@@ -36,17 +42,20 @@ const Header = () => {
           <a className="nav-link" href="#cars" onClick={() => setIsMenuOpen(false)}>Find Your Car</a>
           <a className="nav-link" href="#testimonials" onClick={() => setIsMenuOpen(false)}>Testimonials</a>
           <a className="nav-link" href="#contact" onClick={() => setIsMenuOpen(false)}>Contact</a>
-          <button
-            className="login-button"
-            onClick={() => {
-              setShowLogin(true);
-              setIsMenuOpen(false);
-            }}
-          >
-            Login
-          </button>
+
+          {isLoggedIn ? (
+            <button className="login-button" onClick={handleLogout}>Logout</button>
+          ) : (
+            <button className="login-button" onClick={() => setShowLogin(true)}>Login</button>
+          )}
         </nav>
       </header>
+
+      {logoutMessage && (
+        <div className="logout-toast">
+          Logout successful ✅
+        </div>
+      )}
 
       {showLogin && (
         <Login
@@ -55,6 +64,7 @@ const Header = () => {
             setShowLogin(false);
             setShowSignup(true);
           }}
+          onLoginSuccess={() => setIsLoggedIn(true)}
         />
       )}
 
