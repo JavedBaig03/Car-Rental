@@ -1,18 +1,37 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./Signup.css";
 
 const Signup = ({ onClose, onLoginClick }) => {
-  const [fullName, setFullName] = useState(""); 
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    localStorage.setItem("user", JSON.stringify({ fullName, email, password }));
-    alert("Signup successful!");
-    setFullName("");
-    setEmail("");
-    setPassword("");
+
+    const data = {
+      fullName,
+      email,
+      password,
+      phone,
+      role: "user" // Default role; backend can override or store
+    };
+
+    try {
+      const response = await axios.post("http://localhost:8080/api/users/signup", data);
+      alert("Signup successful!");
+      console.log("Response:", response.data);
+      setFullName("");
+      setEmail("");
+      setPassword("");
+      setPhone("");
+      onClose();
+    } catch (error) {
+      console.error("Error during signup:", error);
+      alert("Signup failed. Try again.");
+    }
   };
 
   return (
@@ -46,7 +65,18 @@ const Signup = ({ onClose, onLoginClick }) => {
             />
           </div>
           <div className="form-group">
-            <label className="form-label">Set Password</label>
+            <label className="form-label">Phone</label>
+            <input
+              type="tel"
+              className="form-control"
+              placeholder="9876543210"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">Password</label>
             <input
               type="password"
               className="form-control"
@@ -59,7 +89,6 @@ const Signup = ({ onClose, onLoginClick }) => {
 
           <button type="submit" className="signup-button">SIGNUP</button>
           <div className="signup-footer">
-
             <p className="signup-link">
               Already have an account?{" "}
               <span

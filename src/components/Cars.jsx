@@ -455,8 +455,9 @@ const Cars = ({ searchData }) => {
   <CarDetailModal
     car={selectedCar}
     onClose={() => setSelectedCar(null)}
-    tripData={searchData} // ✅ this passes the pickup details
+    tripData={searchData} 
   />
+  
 )}
 
     </section>

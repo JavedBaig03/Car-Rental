@@ -1,25 +1,48 @@
 import React, { useState } from "react";
 import "./SearchBar.css";
 
+const indianLocations = [
+  "Delhi", "Mumbai", "Bengaluru", "Hyderabad", "Ahmedabad",
+  "Chennai", "Kolkata", "Pune", "Jaipur", "Lucknow",
+  "Bhopal", "Chandigarh", "Goa", "Nagpur", "Indore", "Vijayawada", "Guntur"
+];
+
 const SearchBar = ({ setSearchData }) => {
   const [pickupLocation, setPickupLocation] = useState("");
   const [pickupDate, setPickupDate] = useState("");
   const [pickupTime, setPickupTime] = useState("");
-  const [duration, setDuration] = useState("");
+  const [durationDays, setDurationDays] = useState("0");
+  const [durationHours, setDurationHours] = useState("0");
   const [showSuccess, setShowSuccess] = useState(false);
+  const [error, setError] = useState("");
+
+  // Get today's date in YYYY-MM-DD format
+  const todayDate = new Date().toISOString().split("T")[0];
 
   const handleSearch = () => {
+    const totalHours = parseInt(durationDays) * 24 + parseInt(durationHours);
+
+    if (!pickupLocation || !pickupDate || !pickupTime) {
+      setError("Please fill all required fields.");
+      return;
+    }
+
+    if (totalHours < 3) {
+      setError("Minimum trip duration must be at least 3 hours.");
+      return;
+    }
+
+    setError(""); // Clear errors
+
     const searchInfo = {
       pickupLocation,
       pickupDate,
       pickupTime,
-      duration
+      duration: `${durationDays} days ${durationHours} hours`
     };
 
-    // Save to local storage so PaymentPage can retrieve it later
     localStorage.setItem("tripDetails", JSON.stringify(searchInfo));
-
-    setSearchData(searchInfo); // for modal usage
+    setSearchData(searchInfo);
     setShowSuccess(true);
     setTimeout(() => setShowSuccess(false), 3000);
   };
@@ -35,12 +58,12 @@ const SearchBar = ({ setSearchData }) => {
 
       <div className="field">
         <label>PICK UP LOCATION</label>
-        <input
-          type="text"
-          placeholder="Enter Pickup location"
-          value={pickupLocation}
-          onChange={(e) => setPickupLocation(e.target.value)}
-        />
+        <select value={pickupLocation} onChange={(e) => setPickupLocation(e.target.value)}>
+          <option value="">Select Location</option>
+          {indianLocations.map((loc) => (
+            <option key={loc} value={loc}>{loc}</option>
+          ))}
+        </select>
       </div>
 
       <div className="field">
@@ -48,6 +71,7 @@ const SearchBar = ({ setSearchData }) => {
         <input
           type="date"
           value={pickupDate}
+          min={todayDate}
           onChange={(e) => setPickupDate(e.target.value)}
         />
       </div>
@@ -63,12 +87,18 @@ const SearchBar = ({ setSearchData }) => {
 
       <div className="field">
         <label>DURATION</label>
-        <input
-          type="text"
-          placeholder="1 hr 10 kms"
-          value={duration}
-          onChange={(e) => setDuration(e.target.value)}
-        />
+        <div style={{ display: "flex", gap: "10px" }}>
+          <select value={durationDays} onChange={(e) => setDurationDays(e.target.value)}>
+            {[...Array(31).keys()].map(day => (
+              <option key={day} value={day}>{day} day{day !== 1 ? 's' : ''}</option>
+            ))}
+          </select>
+          <select value={durationHours} onChange={(e) => setDurationHours(e.target.value)}>
+            {[...Array(24).keys()].map(hour => (
+              <option key={hour} value={hour}>{hour} hr{hour !== 1 ? 's' : ''}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <button className="search-btn" onClick={handleSearch}>ENTER</button>
@@ -76,6 +106,12 @@ const SearchBar = ({ setSearchData }) => {
       {showSuccess && (
         <p className="success-msg">
           Yes, our cars and services are available in that location ✅
+        </p>
+      )}
+
+      {error && (
+        <p className="error-msg" style={{ color: "red", marginTop: "10px" }}>
+          {error}
         </p>
       )}
     </div>
