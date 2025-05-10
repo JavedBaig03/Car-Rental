@@ -16,25 +16,36 @@ const Login = ({ onClose, onSignupClick, onLoginSuccess }) => {
     setError("");
     setLoading(true);
 
-    // Simulated login validation
+    // Simulated backend check
     setTimeout(() => {
       setLoading(false);
+
+      // Hardcoded admin check
       if (role === "admin" && email === "admin@admin.com" && password === "admin123") {
+        localStorage.setItem("role", "admin");
         setShowSuccess(true);
         onLoginSuccess("admin");
         setTimeout(() => {
           navigate("/admin-dashboard");
-        }, 1500);
-      } else if (role === "user" && email && password) {
+        }, 1000);
+      }
+      // Generic user login (only checks if email & password exist)
+      else if (role === "user" && email && password) {
+        localStorage.setItem("role", "user");
         setShowSuccess(true);
         onLoginSuccess("user");
         setTimeout(() => {
           navigate("/welcome", { state: { role: "user" } });
-        }, 1500);
-      } else {
+        }, 1000);
+      }
+      else {
         setError("Invalid login credentials.");
       }
-    }, 1200);
+
+      // Optional: reset fields after login attempt
+      setEmail("");
+      setPassword("");
+    }, 800);
   };
 
   return (
@@ -93,9 +104,7 @@ const Login = ({ onClose, onSignupClick, onLoginSuccess }) => {
               {loading ? "Logging in..." : "Login"}
             </button>
 
-            {showSuccess && (
-              <p className="success-msg">Login Successful ✅ Redirecting...</p>
-            )}
+            {showSuccess && <p className="success-msg">Login Successful ✅ Redirecting...</p>}
             {error && <p className="error-msg">{error}</p>}
           </form>
 

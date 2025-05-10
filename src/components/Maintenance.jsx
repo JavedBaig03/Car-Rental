@@ -1,10 +1,10 @@
 import React from "react";
 import "./Contact.css";
 
-const Contact = () => {
+const Maintenance = () => {
   return (
     <section id="contact" className="contact">
-      <h2 className="contact-title">Contact Us</h2>
+      <h2 className="contact-title">Please State Your Problem</h2>
       <div className="contact-container">
         <div className="contact-info">
           <div className="info-item">
@@ -18,7 +18,7 @@ const Contact = () => {
             <div className="info-icon">📞</div>
             <div className="info-content">
               <h3 className="info-title">Call Us</h3>
-              <p className="info-text">+1 (555) 123-4567</p>
+              <p className="info-text">+91 8074478715</p>
             </div>
           </div>
           <div className="info-item">
@@ -48,11 +48,11 @@ const Contact = () => {
             </div>
             <div className="form-group">
               <label className="form-label">Subject</label>
-              <input type="text" className="form-control" placeholder="Rental Inquiry" required />
+              <input type="text" className="form-control" placeholder="Maintenance Inquiry" required />
             </div>
             <div className="form-group">
               <label className="form-label">Your Message</label>
-              <textarea className="form-control" placeholder="Tell us about your rental needs..." required></textarea>
+              <textarea className="form-control" placeholder="Tell us about your Maintenance needs..." required></textarea>
             </div>
             <button type="submit" className="submit-btn">Send Message</button>
           </form>
@@ -62,4 +62,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default Maintenance;

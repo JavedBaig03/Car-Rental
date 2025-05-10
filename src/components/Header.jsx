@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Login from "./Login.jsx";
 import Signup from "./Signup.jsx";
 import "./Header.css";
 
 const Header = () => {
   const [showLogin, setShowLogin] = useState(false);
-  const [showSignup, setShowSignup] = useState(false); 
+  const [showSignup, setShowSignup] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [logoutMessage, setLogoutMessage] = useState(false);
+  const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -17,10 +19,20 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    if (role) {
+      setIsLoggedIn(true);
+      setUserRole(role);
+    }
+  }, []);
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setUserRole("");
+    localStorage.removeItem("role");
     setLogoutMessage(true);
     setTimeout(() => setLogoutMessage(false), 3000);
   };
@@ -42,6 +54,16 @@ const Header = () => {
           <a className="nav-link" href="#cars" onClick={() => setIsMenuOpen(false)}>Find Your Car</a>
           <a className="nav-link" href="#testimonials" onClick={() => setIsMenuOpen(false)}>Testimonials</a>
           <a className="nav-link" href="#contact" onClick={() => setIsMenuOpen(false)}>Contact</a>
+          {isLoggedIn && userRole === "user" && (
+            <Link to="/maintenance" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+              Maintenance
+            </Link>
+          )}
+          {isLoggedIn && userRole === "user" && (
+            <Link to="/mybookings" className="nav-link" onClick={() => setIsMenuOpen(false)}>
+              MyBookings
+            </Link>
+          )}
 
           {isLoggedIn ? (
             <button className="login-button" onClick={handleLogout}>Logout</button>
@@ -64,7 +86,11 @@ const Header = () => {
             setShowLogin(false);
             setShowSignup(true);
           }}
-          onLoginSuccess={() => setIsLoggedIn(true)}
+          onLoginSuccess={(role) => {
+            setIsLoggedIn(true);
+            setUserRole(role);
+            localStorage.setItem("role", role);
+          }}
         />
       )}
 

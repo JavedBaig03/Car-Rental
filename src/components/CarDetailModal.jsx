@@ -62,6 +62,10 @@ const CarDetailModal = ({ car, onClose, tripData }) => {
             <div className="spec">
               <p className="label">Acceleration</p>
               <p className="value">{car.acceleration}</p>
+              <div>
+    <p className="attribute-label">Available</p>
+    <p className="attribute-value">{car.available || "5"}</p>
+  </div>
             </div>
           </div>
 

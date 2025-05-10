@@ -7,6 +7,8 @@ const indianLocations = [
   "Bhopal", "Chandigarh", "Goa", "Nagpur", "Indore", "Vijayawada", "Guntur"
 ];
 
+const todayDate = "2025-05-10"; // Set this dynamically in production
+
 const SearchBar = ({ setSearchData }) => {
   const [pickupLocation, setPickupLocation] = useState("");
   const [pickupDate, setPickupDate] = useState("");
@@ -15,9 +17,6 @@ const SearchBar = ({ setSearchData }) => {
   const [durationHours, setDurationHours] = useState("0");
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState("");
-
-  // Get today's date in YYYY-MM-DD format
-  const todayDate = new Date().toISOString().split("T")[0];
 
   const handleSearch = () => {
     const totalHours = parseInt(durationDays) * 24 + parseInt(durationHours);
@@ -32,7 +31,7 @@ const SearchBar = ({ setSearchData }) => {
       return;
     }
 
-    setError(""); // Clear errors
+    setError("");
 
     const searchInfo = {
       pickupLocation,
@@ -70,8 +69,8 @@ const SearchBar = ({ setSearchData }) => {
         <label>PICK - UP DATE</label>
         <input
           type="date"
-          value={pickupDate}
           min={todayDate}
+          value={pickupDate}
           onChange={(e) => setPickupDate(e.target.value)}
         />
       </div>

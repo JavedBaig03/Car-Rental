@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./PaymentPage.css";
 
 const PaymentPage = () => {
   const { state } = useLocation();
+  const navigate = useNavigate();
   const { car, selectedPlan, price, tripDetails } = state || {};
   const [paymentMode, setPaymentMode] = useState("card");
   const [showSuccess, setShowSuccess] = useState(false);
@@ -14,8 +15,19 @@ const PaymentPage = () => {
 
   const handlePayment = (e) => {
     e.preventDefault();
+
+    // ✅ Save booking data in localStorage
+    const existingBookings = JSON.parse(localStorage.getItem("myBookings")) || [];
+    const newBooking = { car, selectedPlan, price, tripDetails };
+    localStorage.setItem("myBookings", JSON.stringify([...existingBookings, newBooking]));
+
     setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 3000);
+
+    // Optional: Redirect to MyBookings after a short delay
+    setTimeout(() => {
+      setShowSuccess(false);
+      navigate("/mybookings");
+    }, 2000);
   };
 
   return (
@@ -60,7 +72,6 @@ const PaymentPage = () => {
             </button>
           </div>
 
-          {/* Animated form switch */}
           <div className="payment-method-fields fade-in">
             {paymentMode === "card" && (
               <form className="payment-form" onSubmit={handlePayment}>
@@ -68,18 +79,7 @@ const PaymentPage = () => {
                 <input type="text" placeholder="Card Number" required pattern="\d{16}" inputMode="numeric" maxLength="16" title="Enter 16-digit card number" />
                 <input type="text" placeholder="Expiry (MM/YY)" required pattern="(0[1-9]|1[0-2])/\d{2}" title="Format: MM/YY" />
                 <input type="text" placeholder="CVV" required pattern="\d{3}" inputMode="numeric" maxLength="3" title="3-digit CVV code" />
-                
-                {/* Aadhar number input */}
-                <input
-                  type="text"
-                  placeholder="Aadhar Number"
-                  required
-                  pattern="\d{12}"
-                  inputMode="numeric"
-                  maxLength="12"
-                  title="Enter 12-digit Aadhar number"
-                />
-
+                <input type="text" placeholder="Aadhar Number" required pattern="\d{12}" inputMode="numeric" maxLength="12" title="Enter 12-digit Aadhar number" />
                 <button type="submit" className="confirm-btn">Confirm Card Payment</button>
               </form>
             )}
@@ -87,18 +87,7 @@ const PaymentPage = () => {
             {paymentMode === "upi" && (
               <form className="payment-form" onSubmit={handlePayment}>
                 <input type="text" placeholder="Enter UPI ID" required pattern="^[\w.-]+@[\w]+$" title="Format: example@bank" />
-
-                {/* Aadhar number input */}
-                <input
-                  type="text"
-                  placeholder="Aadhar Number"
-                  required
-                  pattern="\d{12}"
-                  inputMode="numeric"
-                  maxLength="12"
-                  title="Enter 12-digit Aadhar number"
-                />
-
+                <input type="text" placeholder="Aadhar Number" required pattern="\d{12}" inputMode="numeric" maxLength="12" title="Enter 12-digit Aadhar number" />
                 <button type="submit" className="confirm-btn">Confirm UPI Payment</button>
               </form>
             )}

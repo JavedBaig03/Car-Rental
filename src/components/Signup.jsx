@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import "./Signup.css";
 
 const Signup = ({ onClose, onLoginClick }) => {
@@ -8,7 +7,7 @@ const Signup = ({ onClose, onLoginClick }) => {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const data = {
@@ -16,22 +15,20 @@ const Signup = ({ onClose, onLoginClick }) => {
       email,
       password,
       phone,
-      role: "user" // Default role; backend can override or store
+      role: "user"
     };
 
-    try {
-      const response = await axios.post("http://localhost:8080/api/users/signup", data);
-      alert("Signup successful!");
-      console.log("Response:", response.data);
-      setFullName("");
-      setEmail("");
-      setPassword("");
-      setPhone("");
-      onClose();
-    } catch (error) {
-      console.error("Error during signup:", error);
-      alert("Signup failed. Try again.");
-    }
+    // Simulated signup process
+    console.log("Signup data:", data);
+    alert("Signup successful ✅");
+
+    // Clear form
+    setFullName("");
+    setEmail("");
+    setPassword("");
+    setPhone("");
+
+    onClose(); // close the signup modal
   };
 
   return (
@@ -41,6 +38,7 @@ const Signup = ({ onClose, onLoginClick }) => {
           <h2 className="signup-title">Signup to Your Account</h2>
           <button className="close-button" onClick={onClose}>✕</button>
         </div>
+
         <form className="signup-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label className="form-label">Full Name</label>
@@ -53,6 +51,7 @@ const Signup = ({ onClose, onLoginClick }) => {
               required
             />
           </div>
+
           <div className="form-group">
             <label className="form-label">Email</label>
             <input
@@ -64,6 +63,7 @@ const Signup = ({ onClose, onLoginClick }) => {
               required
             />
           </div>
+
           <div className="form-group">
             <label className="form-label">Phone</label>
             <input
@@ -75,6 +75,7 @@ const Signup = ({ onClose, onLoginClick }) => {
               required
             />
           </div>
+
           <div className="form-group">
             <label className="form-label">Password</label>
             <input
@@ -88,6 +89,7 @@ const Signup = ({ onClose, onLoginClick }) => {
           </div>
 
           <button type="submit" className="signup-button">SIGNUP</button>
+
           <div className="signup-footer">
             <p className="signup-link">
               Already have an account?{" "}

@@ -21,6 +21,7 @@ const Cars = ({ searchData }) => {
       power: "395 hp @ 5,500 rpm",
       speed: "225 km/h",
       acceleration: "6.5 sec 0–60",
+      available: "6",
       tag: "Premium",
       features: ["Automatic", "4WD", "Leather"]
     },
@@ -36,6 +37,7 @@ const Cars = ({ searchData }) => {
       power: "204 hp @ 3,400 rpm",
       speed: "180 km/h",
       acceleration: "9.8 sec 0–60",
+      available: "7",
       tag: "Premium",
       features: ["Automatic", "4WD", "Leather"]
     },
@@ -51,6 +53,7 @@ const Cars = ({ searchData }) => {
       power: "335 hp @ 5,500 rpm",
       speed: "250 km/h",
       acceleration: "5.2 sec 0–60",
+      available: "1",
       tag: "Premium",
       features: ["Automatic", "Leather", "GPS"]
     },
@@ -66,6 +69,7 @@ const Cars = ({ searchData }) => {
       power: "261 hp @ 6,000 rpm",
       speed: "240 km/h",
       acceleration: "6.1 sec 0–60",
+      available: "NA",
       tag: "Premium",
       features: ["Automatic", "Leather", "GPS"]
     },
@@ -114,6 +118,7 @@ const Cars = ({ searchData }) => {
       power: "379 hp @ 6,500 rpm",
       speed: "293 km/h",
       acceleration: "4.0 sec 0–60",
+      available: "6",
       tag: "Sports",
       features: ["Manual", "Turbo"]
     },
@@ -129,6 +134,7 @@ const Cars = ({ searchData }) => {
       power: "710 hp @ 8,000 rpm",
       speed: "340 km/h",
       acceleration: "2.9 sec 0–60",
+      available: "6",
       tag: "Sports",
       features: ["Manual", "Turbo"]
     },
@@ -144,6 +150,7 @@ const Cars = ({ searchData }) => {
       power: "631 hp @ 8,000 rpm",
       speed: "325 km/h",
       acceleration: "2.8 sec 0–60",
+      available: "6",
       tag: "Sports",
       features: ["Automatic", "Turbo"]
     },
@@ -159,6 +166,7 @@ const Cars = ({ searchData }) => {
       power: "189 hp @ 5,000 rpm",
       speed: "225 km/h",
       acceleration: "6.4 sec 0–60",
+      available: "6",
       tag: "Sports",
       features: ["Manual", "Turbo"]
     },
@@ -207,6 +215,7 @@ const Cars = ({ searchData }) => {
       power: "283 hp",
       speed: "225 km/h",
       acceleration: "5.3 sec 0–60",
+      available: "6",
       tag: "Eco",
       features: ["Electric", "Automatic"]
     },
@@ -222,6 +231,7 @@ const Cars = ({ searchData }) => {
       power: "147 hp",
       speed: "144 km/h",
       acceleration: "7.9 sec 0–60",
+      available: "6",
       tag: "Eco",
       features: ["Electric", "Automatic"]
     },
@@ -237,6 +247,7 @@ const Cars = ({ searchData }) => {
       power: "200 hp",
       speed: "150 km/h",
       acceleration: "6.5 sec 0–60",
+      available: "6",
       tag: "Eco",
       features: ["Electric", "Automatic"]
     },
@@ -252,6 +263,7 @@ const Cars = ({ searchData }) => {
       power: "320 hp",
       speed: "185 km/h",
       acceleration: "5.1 sec 0–60",
+      available: "6",
       tag: "Eco",
       features: ["Electric", "Automatic"]
     },
@@ -299,6 +311,7 @@ const Cars = ({ searchData }) => {
       power: "203 hp",
       speed: "210 km/h",
       acceleration: "7.6 sec 0–60",
+      available: "6",
       tag: "Sedan",
       features: ["Automatic", "A/C"]
     },
@@ -314,6 +327,7 @@ const Cars = ({ searchData }) => {
       power: "192 hp",
       speed: "195 km/h",
       acceleration: "7.2 sec 0–60",
+      available: "6",
       tag: "Sedan",
       features: ["Automatic", "A/C"]
     },
@@ -329,6 +343,7 @@ const Cars = ({ searchData }) => {
       power: "147 hp",
       speed: "195 km/h",
       acceleration: "8.1 sec 0–60",
+      available: "6",
       tag: "Sedan",
       features: ["Automatic", "A/C"]
     },
@@ -344,6 +359,7 @@ const Cars = ({ searchData }) => {
       power: "188 hp",
       speed: "200 km/h",
       acceleration: "7.5 sec 0–60",
+      available: "6",
       tag: "Sedan",
       features: ["Automatic", "A/C"]
     },
@@ -374,6 +390,7 @@ const Cars = ({ searchData }) => {
       power: "180 hp",
       speed: "210 km/h",
       acceleration: "7.0 sec 0–60",
+      available: "6",
       tag: "Sedan",
       features: ["Automatic", "A/C"]
     }
@@ -455,9 +472,8 @@ const Cars = ({ searchData }) => {
   <CarDetailModal
     car={selectedCar}
     onClose={() => setSelectedCar(null)}
-    tripData={searchData} 
+    tripData={searchData} // ✅ this passes the pickup details
   />
-  
 )}
 
     </section>
