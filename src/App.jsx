@@ -15,13 +15,18 @@ import "./App.css";
 const App = () => {
   const [userRole, setUserRole] = useState("");
 
-  // Load saved role on initial mount
+  // Load role from localStorage on mount
   useEffect(() => {
     const savedRole = localStorage.getItem("role");
     if (savedRole) {
       setUserRole(savedRole);
     }
   }, []);
+
+  // Debug
+  useEffect(() => {
+    console.log("Current Role:", userRole);
+  }, [userRole]);
 
   return (
     <Router>
@@ -36,18 +41,24 @@ const App = () => {
           <Route path="/mybookings" element={<MyBookings />} />
           <Route path="/maintenance" element={<Maintenance />} />
 
-          {/* Admin-Only Routes */}
+          {/* Admin Routes - Protected */}
           <Route
             path="/admin-dashboard"
-            element={userRole === "admin" ? <AdminDashboard /> : <Navigate to="/" />}
+            element={
+              userRole === "admin" ? <AdminDashboard /> : <Navigate to="/" replace />
+            }
           />
           <Route
             path="/admin-cars"
-            element={userRole === "admin" ? <AdminCars /> : <Navigate to="/" />}
+            element={
+              userRole === "admin" ? <AdminCars /> : <Navigate to="/" replace />
+            }
           />
           <Route
             path="/admin-bookings"
-            element={userRole === "admin" ? <AdminBookings /> : <Navigate to="/" />}
+            element={
+              userRole === "admin" ? <AdminBookings /> : <Navigate to="/" replace />
+            }
           />
 
           {/* Fallback */}

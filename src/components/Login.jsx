@@ -16,33 +16,27 @@ const Login = ({ onClose, onSignupClick, onLoginSuccess }) => {
     setError("");
     setLoading(true);
 
-    // Simulated backend check
     setTimeout(() => {
       setLoading(false);
 
-      // Hardcoded admin check
       if (role === "admin" && email === "admin@admin.com" && password === "admin123") {
         localStorage.setItem("role", "admin");
-        setShowSuccess(true);
         onLoginSuccess("admin");
+        setShowSuccess(true);
         setTimeout(() => {
           navigate("/admin-dashboard");
         }, 1000);
-      }
-      // Generic user login (only checks if email & password exist)
-      else if (role === "user" && email && password) {
+      } else if (role === "user" && email && password) {
         localStorage.setItem("role", "user");
-        setShowSuccess(true);
         onLoginSuccess("user");
+        setShowSuccess(true);
         setTimeout(() => {
           navigate("/welcome", { state: { role: "user" } });
         }, 1000);
-      }
-      else {
+      } else {
         setError("Invalid login credentials.");
       }
 
-      // Optional: reset fields after login attempt
       setEmail("");
       setPassword("");
     }, 800);

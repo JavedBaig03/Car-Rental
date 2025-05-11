@@ -1,13 +1,14 @@
+// AdminDashboard.jsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./Dashboard.css"; // You can enhance styling here
+import "./Dashboard.css"; // Optional: enhance dashboard styles
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("role");
-    navigate("/"); // Go back to homepage
+    navigate("/"); // Redirect to home page after logout
   };
 
   return (
